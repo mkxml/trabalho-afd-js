@@ -44,8 +44,9 @@ projeto não se faz necessário.
 ## Autores
 
 [Matheus Kautzmann](https://github.com/mkautzmann/)
+
 [Rômulo Alves](https://github.com/romuloalves/)
 
 ## Licença
 
-[MIT License](https://github.com/mkautzmann/trabalho-afd-js/LICENSE.md)
+[MIT License](LICENSE.md)

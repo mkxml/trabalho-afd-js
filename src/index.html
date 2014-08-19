@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>Autômatos Finito Determinístico</title>
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="css/ui.css">
+  </head>
+  <body>
+    <div id="configuracao_alfabeto">
+      <form id="form_alfabeto">
+        <span>Digite um símbolo e pressione "Adicionar":</span>
+        <input type="text" id="simbolo" required>
+        <input type="submit" id="adicionar_simbolo" value="Adicionar">
+        <table id="alfabeto" border="1">
+          <thead>
+            <tr>
+              <th>
+                Símbolos do alfabeto
+              </th>
+              <th>
+                Ações
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div id="configuracao_estados" class="hidden">
+      <input type="button" id="novo_estado" value="+ Novo estado">
+      <table id="automato" border="1">
+        <thead>
+          <tr>
+            <th>
+              Estado
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <script type="text/javascript" src="js/geral.js"></script>
+    <script type="text/javascript" src="js/ui.js"></script>
+  </body>
+</html>

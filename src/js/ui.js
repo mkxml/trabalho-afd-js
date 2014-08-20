@@ -13,6 +13,19 @@
     }
   });
 
+  document.getElementById('configurar_estados').addEventListener('click', function () {
+    document.getElementById('configuracao_alfabeto').classList.add('hidden');
+
+    var cabecalho = '';
+    for (var i = 0; i < simbolos.length; i++) {
+      cabecalho += '<th>' + simbolos[i] + '</th>';
+    }
+
+    document.getElementById('automato').tHead.rows[0].innerHTML += cabecalho;
+
+    document.getElementById('configuracao_estados').classList.remove('hidden');
+  });
+
   document.getElementById('alfabeto').addEventListener('click', function (e) {
     var target = e.target;
     if (target.classList.contains('alfabeto-remover')) {

@@ -1,1 +1,2 @@
-var simbolos = [];
+var simbolos = [],
+  estados = [];

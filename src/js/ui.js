@@ -44,6 +44,29 @@
     }
   });
 
+  var novoEstado = function () {
+    var linha = '<tr><td>{q0}</td>';
+    for (var i = 0; i < simbolos.length; i++) {
+      linha += '<td><select id="q0_' + i + '"><option value="">NULL</option><option value="0">Novo estado</option></select></td>';
+    }
+    linha += '</tr>';
+
+    document.getElementById('automato').tBodies[0].innerHTML += linha;
+  };
+
+  /* Configuracao dos estados */
+  document.getElementById('novo_estado').addEventListener('click', function () {
+    novoEstado();
+  });
+
+  document.getElementById('automato').addEventListener('change', function (e) {
+    var target = e.target;
+    if (target && target.tagName === 'SELECT' && target.value === '0') {
+      // Criar novo estado
+      novoEstado();
+    }
+  });
+
 
   // Execucoes iniciais
   document.getElementById('simbolo').focus();

@@ -44,14 +44,23 @@
     }
   });
 
-  var novoEstado = function () {
-    var linha = '<tr><td>{q0}</td>';
+  var novoEstado = function (callback) {
+    var qtdEstados = estados.length;
+    var linha = '<tr><td>{q' + qtdEstados + '}</td>';
     for (var i = 0; i < simbolos.length; i++) {
-      linha += '<td><select id="q0_' + i + '"><option value="">NULL</option><option value="0">Novo estado</option></select></td>';
+      linha += '<td><select id="q' + qtdEstados + '_' + i + '"><option value="">NULL</option><option value="0">Novo estado</option></select></td>';
     }
     linha += '</tr>';
 
     document.getElementById('automato').tBodies[0].innerHTML += linha;
+
+    estados.push({
+      id: qtdEstados
+    });
+
+    if (callback && typeof callback === 'function') {
+      callback(qtdEstados);
+    }
   };
 
   /* Configuracao dos estados */
@@ -63,8 +72,19 @@
     var target = e.target;
     if (target && target.tagName === 'SELECT' && target.value === '0') {
       // Criar novo estado
-      novoEstado();
+      novoEstado(function (estado) {
+        var option = document.createElement('option');
+        option.text = '{q' + estado + '}';
+        option.value = 'q' + estado;
+
+        document.getElementById(target.id).add(option);
+        document.getElementById(target.id).value = option.value;
+      });
     }
+  });
+
+  document.getElementById('salvar_estados').addEventListener('click', function () {
+    var linhas = document.getElementById('automato').tBodies[0].rows;
   });
 
 

@@ -44,6 +44,30 @@
     }
   });
 
+  var gerarOptionEstado = function (indice) {
+    var option = document.createElement('option');
+    option.text = '{q' + indice + '}';
+    option.value = 'q' + indice;
+
+    return option;
+  };
+
+  var popularNovosEstados = function () {
+    var selects = document.querySelectorAll('#automato select');
+    if (selects && selects.length > 0) {
+      var i = 0,
+        qtd = selects.length;
+
+      for (; i < qtd; i++) {
+        for (var x = 0; x < estados.length; x++) {
+          if (document.querySelector('#' + selects[i].id + ' option[value=q' + estados[x].id + ']') === null) {
+            selects[i].add(gerarOptionEstado(estados[x].id));
+          }
+        }
+      }
+    }
+  };
+
   var novoEstado = function (callback) {
     var qtdEstados = estados.length;
     var linha = '<tr><td>{q' + qtdEstados + '}</td>';
@@ -57,6 +81,8 @@
     estados.push({
       id: qtdEstados
     });
+
+    popularNovosEstados();
 
     if (callback && typeof callback === 'function') {
       callback(qtdEstados);
@@ -73,12 +99,7 @@
     if (target && target.tagName === 'SELECT' && target.value === '0') {
       // Criar novo estado
       novoEstado(function (estado) {
-        var option = document.createElement('option');
-        option.text = '{q' + estado + '}';
-        option.value = 'q' + estado;
-
-        document.getElementById(target.id).add(option);
-        document.getElementById(target.id).value = option.value;
+        document.getElementById(target.id).value = 'q' + estado;
       });
     }
   });

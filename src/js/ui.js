@@ -76,7 +76,11 @@
     }
     linha += '</tr>';
 
-    document.getElementById('automato').tBodies[0].innerHTML += linha;
+    var el = document.createElement('tr');
+
+    el.innerHTML = linha;
+
+    document.getElementById('automato').appendChild(el);
 
     estados.push({
       id: qtdEstados

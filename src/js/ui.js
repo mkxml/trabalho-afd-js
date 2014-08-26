@@ -98,6 +98,23 @@
     novoEstado();
   });
 
+  var incluirTransicoesEstados = function (target, estado) {
+    // Cria vinculo de estado
+    var id = target.id.replace('q', ''),
+      estadoSimbolo = id.split('_');
+
+    if (estadoSimbolo.length === 2) {
+      if (estados[estadoSimbolo[0]]) {
+        // Os ids são separados por estado_simbolo, por isso:
+        // estadoSimbolo[0] = estado
+        // estadoSimbolo[1] = simbolo
+
+        //Vincula no estado com id estadoSimbolo[0], no simbolo estadoSimbolo[1], o estado selecionado
+        estados[estadoSimbolo[0]][estadoSimbolo[1]] = estado;
+      }
+    }
+  };
+
   document.getElementById('automato').addEventListener('change', function (e) {
     var target = e.target;
     if (target && target.tagName === 'SELECT') {
@@ -105,40 +122,19 @@
         // Criar novo estado
         novoEstado(function (estado) {
           document.getElementById(target.id).value = 'q' + estado;
-
-
-            // Cria vinculo de estado
-            var id = target.id.replace('q', ''),
-              estadoSimbolo = id.split('_');
-
-            if (estadoSimbolo.length === 2) {
-              if (estados[estadoSimbolo[0]]) {
-                // Os ids são separados por estado_simbolo, por isso:
-                // estadoSimbolo[0] = estado
-                // estadoSimbolo[1] = simbolo
-
-                //Vincula no estado com id estadoSimbolo[0], no simbolo estadoSimbolo[1], o estado selecionado
-                estados[estadoSimbolo[0]][estadoSimbolo[1]] = 'q' + estado;
-              }
-            }
-
+          incluirTransicoesEstados(target, 'q' + estado);
         });
       }
       else if (target.value !== '') {
-        // Cria vinculo de estado
+        // Cria transicao em estados
+        incluirTransicoesEstados(target, target.value);
+      }
+      else {
+        // Remove completamente transicao
         var id = target.id.replace('q', ''),
           estadoSimbolo = id.split('_');
 
-        if (estadoSimbolo.length === 2) {
-          if (estados[estadoSimbolo[0]]) {
-            // Os ids são separados por estado_simbolo, por isso:
-            // estadoSimbolo[0] = estado
-            // estadoSimbolo[1] = simbolo
-
-            //Vincula no estado com id estadoSimbolo[0], no simbolo estadoSimbolo[1], o estado selecionado
-            estados[estadoSimbolo[0]][estadoSimbolo[1]] = target.value;
-          }
-        }
+        delete estados[estadoSimbolo[0]][estadoSimbolo[1]];
       }
     }
   });

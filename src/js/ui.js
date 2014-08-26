@@ -166,7 +166,7 @@
       }
 
       // Remove estado do array resposavel por armazenar todos os existentes
-      estados.slice(estado, 1);
+      estados.splice(estado, 1);
     }
 
 

@@ -31,9 +31,6 @@ direto em JavaScript.
 
 Essa API está presente em todos os [evergreen browsers](http://caniuse.com/#feat=fileapi).
 
-Além disso há a possibilidade de integrar com [node-webkit](https://github.com/rogerwang/node-webkit) para garantir que
-funciona em qualquer ambiente.
-
 ## Interface
 
 A interface pode ser construída através da combinação de HTML e CSS.

@@ -70,7 +70,7 @@
 
   var novoEstado = function (callback) {
     var qtdEstados = estados.length;
-    var linha = '<tr><td>{q' + qtdEstados + '}</td>';
+    var linha = '<tr><td>{q' + qtdEstados + '}<a href="#" data-estado="' + qtdEstados + '" class="remover_estado" title="Remover: Todos as transições serão removidas.">Remover</a></td>';
     for (var i = 0; i < simbolos.length; i++) {
       linha += '<td><select id="q' + qtdEstados + '_' + simbolos[i] + '"><option value="">NULL</option><option value="0">Novo estado</option></select></td>';
     }
@@ -137,6 +137,41 @@
         delete estados[estadoSimbolo[0]][estadoSimbolo[1]];
       }
     }
+  });
+
+  document.getElementById('automato').addEventListener('click', function (e) {
+    var target = e.target;
+
+    if (target.tagName === 'A') {
+      var estado = target.dataset.estado;
+
+      // Remover todos os vinculos a este estado
+      for (var i = 0; i < estados.length; i++) {
+        if (i != estado) {
+          for (attr in estados[i]) {
+            if (!isNaN(attr) && estados[i][attr] === 'q' + estado) {
+              // Deixa os selects com valor NULL
+              document.getElementById('q' + i + '_' + attr).value = '';
+
+              // Deleta propriedade de transicao
+              delete estados[i][attr];
+            }
+          }
+        }
+      }
+
+      // Deleta linha com estado
+      if (target.parentNode && target.parentNode.parentNode) {
+        target.parentNode.parentNode.remove();
+      }
+
+      // Remove estado do array resposavel por armazenar todos os existentes
+      estados.splice(estado, 1);
+    }
+
+
+    e.preventDefault();
+    return false;
   });
 
   document.getElementById('salvar_estados').addEventListener('click', function () {

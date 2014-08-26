@@ -178,6 +178,37 @@
     var linhas = document.getElementById('automato').tBodies[0].rows;
   });
 
+  var mostraResultado = function () {
+    if(!entrada) {
+      alert("Você precisa selecionar um TXT");
+      return;
+    }
+    var texto = document.getElementById('saida_processamento');
+
+    //TODO: Mostrar saída do verdadeiro processamento, mostrando se aceita ou não
+    texto.innerHTML = entrada;
+  };
+
+  var carregaTXT = function (arq) {
+    if(arq.type !== 'text/plain') {
+      entrada = null;
+      return;
+    }
+    var output = "";
+    var leitor = new FileReader();
+    leitor.onload = function (e) {
+      output = e.target.result;
+      entrada = output;
+    };
+    leitor.readAsText(arq);
+  };
+
+  document.getElementById('txt').addEventListener('change', function (){
+    var arq = this.files[0];
+    carregaTXT(arq);
+  }, false);
+
+  document.getElementById('computa_txt').addEventListener('click', mostraResultado, false);
 
   // Execucoes iniciais
   document.getElementById('simbolo').focus();

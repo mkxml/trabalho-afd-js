@@ -1,2 +1,3 @@
 var simbolos = [],
-  estados = [];
+  estados = [],
+  entrada = null;

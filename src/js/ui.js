@@ -165,8 +165,22 @@
         target.parentNode.parentNode.remove();
       }
 
-      // Remove estado do array resposavel por armazenar todos os existentes
+      // Remove estado do array
       estados.splice(estado, 1);
+
+      // Remover estado dos selects
+      var selects = document.querySelectorAll('#automato select');
+      if (selects && selects.length > 0) {
+        var i = 0,
+          qtd = selects.length;
+
+        for (; i < qtd; i++) {
+          var el = document.querySelector('#' + selects[i].id + ' option[value=q' + estado + ']');
+          if (el !== null) {
+            el.remove();
+          }
+        }
+      }
     }
 
 

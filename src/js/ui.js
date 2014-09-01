@@ -71,7 +71,12 @@
   var novoEstado = function (callback) {
     var qtdEstados = estados.length;
     var linha = '<tr><td><input name="c'+ qtdEstados +'" type="checkbox" data-estado="'+ qtdEstados +'" class="check_final"></td>';
-    linha += '<td>{q' + qtdEstados + '}<a href="#" data-estado="' + qtdEstados + '" class="remover_estado" title="Remover: Todos as transições serão removidas.">Remover</a>';
+    if(qtdEstados === 0) {
+      linha += '<td>{q' + qtdEstados + '}<b>*</b> <a href="#" data-estado="' + qtdEstados + '" class="remover_estado" title="Remover: Todos as transições serão removidas.">Remover</a>';
+    }
+    else {
+      linha += '<td>{q' + qtdEstados + '}<a href="#" data-estado="' + qtdEstados + '" class="remover_estado" title="Remover: Todos as transições serão removidas.">Remover</a>';
+    }
     //Adiciona checkbox estado final
     linha += '</td>';
     for (var i = 0; i < simbolos.length; i++) {

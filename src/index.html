@@ -10,7 +10,7 @@
         <span>Digite um símbolo e pressione "Adicionar":</span>
         <input type="text" id="simbolo" required>
         <input type="submit" id="adicionar_simbolo" value="Adicionar">
-        <table id="alfabeto" border="1">
+        <table id="alfabeto">
           <thead>
             <tr>
               <th>
@@ -26,24 +26,25 @@
         </table>
       </form>
       <input type="button" id="configurar_estados" value="Configurar Estados">
-      <input type="file" id="txt">
-      <input type="button" id="computa_txt" value="Computa TXT">
-      <span id="saida_processamento"></span>
     </div>
     <div id="configuracao_estados" class="hidden">
       <input type="button" id="novo_estado" value="+ Novo estado">
-      <table id="automato" border="1">
+      <table id="automato">
         <thead>
           <tr>
+            <th>
+              Final
+            </th>
             <th>
               Estado
             </th>
           </tr>
         </thead>
-        <tbody>
-        </tbody>
+        <tbody id="transicoes_automato"></tbody>
       </table>
-      <input type="button" id="salvar_estados" value="Salvar estados">
+      <input type="file" id="txt">
+      <input type="button" id="computa_txt" value="Executar autômato">
+      <span id="saida_processamento"></span>
     </div>
     <script type="text/javascript" src="js/geral.js"></script>
     <script type="text/javascript" src="js/ui.js"></script>

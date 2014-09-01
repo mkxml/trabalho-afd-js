@@ -90,8 +90,14 @@
 
     document.getElementById('transicoes_automato').appendChild(el);
 
+    document.querySelectorAll('.check_final')[qtdEstados].addEventListener('change', function(){
+      estados[qtdEstados].final = this.checked;
+    }, false);
+
     estados.push({
-      id: qtdEstados
+      id: qtdEstados,
+      transicoes: {},
+      final: false
     });
 
     popularNovosEstados();
@@ -118,7 +124,7 @@
         // estadoSimbolo[1] = simbolo
 
         //Vincula no estado com id estadoSimbolo[0], no simbolo estadoSimbolo[1], o estado selecionado
-        estados[estadoSimbolo[0]][estadoSimbolo[1]] = estado;
+        estados[estadoSimbolo[0]].transicoes[estadoSimbolo[1]] = estado;
       }
     }
   };
@@ -142,7 +148,7 @@
         var id = target.id.replace('q', ''),
           estadoSimbolo = id.split('_');
 
-        delete estados[estadoSimbolo[0]][estadoSimbolo[1]];
+        delete estados[estadoSimbolo[0]].transicoes[estadoSimbolo[1]];
       }
     }
   });
@@ -182,37 +188,43 @@
     }
   });
 
-  var mostraResultado = function () {
+  var mostraResultado = function (input) {
+    entrada = input;
     if(!entrada) {
       alert("Você precisa selecionar um TXT");
       return;
     }
     var texto = document.getElementById('saida_processamento');
 
-    //TODO: Mostrar saída do verdadeiro processamento, mostrando se aceita ou não
-    texto.innerHTML = entrada;
+    //Roda o autômato em cima do TXT
+    var resultado = processaAutomato();
+
+    texto.innerHTML = resultado;
   };
 
-  var carregaTXT = function (arq) {
+  window.carregaTXT = function (arq) {
     if(arq.type !== 'text/plain') {
+      alert("Você precisa selecionar um TXT");
       entrada = null;
       return;
     }
     var output = "";
     var leitor = new FileReader();
-    leitor.onload = function (e) {
-      output = e.target.result;
-      entrada = output;
+    leitor.onloadend = function (e) {
+      mostraResultado(e.target.result);
     };
     leitor.readAsText(arq);
   };
 
-  document.getElementById('txt').addEventListener('change', function (){
-    var arq = this.files[0];
-    carregaTXT(arq);
+  document.getElementById('computa_txt').addEventListener('click', function(){
+    var arq = document.getElementById('txt').files[0];
+    if(arq) {
+      carregaTXT(arq);
+    }
+    else {
+      alert("Selecione um TXT");
+    }
   }, false);
-
-  document.getElementById('computa_txt').addEventListener('click', mostraResultado, false);
 
   // Execucoes iniciais
   document.getElementById('simbolo').focus();

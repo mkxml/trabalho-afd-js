@@ -70,7 +70,10 @@
 
   var novoEstado = function (callback) {
     var qtdEstados = estados.length;
-    var linha = '<tr><td>{q' + qtdEstados + '}<a href="#" data-estado="' + qtdEstados + '" class="remover_estado" title="Remover: Todos as transições serão removidas.">Remover</a></td>';
+    var linha = '<tr><td><input name="c'+ qtdEstados +'" type="checkbox" data-estado="'+ qtdEstados +'" class="check_final"></td>';
+    linha += '<td>{q' + qtdEstados + '}<a href="#" data-estado="' + qtdEstados + '" class="remover_estado" title="Remover: Todos as transições serão removidas.">Remover</a>';
+    //Adiciona checkbox estado final
+    linha += '</td>';
     for (var i = 0; i < simbolos.length; i++) {
       linha += '<td><select id="q' + qtdEstados + '_' + simbolos[i] + '"><option value="">NULL</option><option value="0">Novo estado</option></select></td>';
     }
@@ -80,7 +83,7 @@
 
     el.innerHTML = linha;
 
-    document.getElementById('automato').appendChild(el);
+    document.getElementById('transicoes_automato').appendChild(el);
 
     estados.push({
       id: qtdEstados
@@ -160,22 +163,18 @@
         }
       }
 
-      // Deleta linha com estado
-      if (target.parentNode && target.parentNode.parentNode) {
-        target.parentNode.parentNode.remove();
+      // Exclui todas as linhas depois do estado selecionado para evitar problemas
+      for(var l = estados.length; l > estado; l--) {
+
+        document.querySelector('#transicoes_automato tr:last-child').remove();
+
+        // Remove estado do array resposavel por armazenar todos os existentes
+        estados.splice((l-1), 1);
       }
 
-      // Remove estado do array resposavel por armazenar todos os existentes
-      estados.splice(estado, 1);
+      e.preventDefault();
+      return false;
     }
-
-
-    e.preventDefault();
-    return false;
-  });
-
-  document.getElementById('salvar_estados').addEventListener('click', function () {
-    var linhas = document.getElementById('automato').tBodies[0].rows;
   });
 
   var mostraResultado = function () {
